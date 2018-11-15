@@ -10,9 +10,9 @@ namespace CSharpClient
     {
         static async Task Main(string[] args)
         {
-            var accessToken = "";
+            var accessToken = "{generate the access token}";
             var hubName = "chat";
-            var endpoint = "lianwei-aspnet-3.servicedev.signalr.net/client/";
+            var endpoint = "{the endpoint from the connection string}/client/";
             var connection = new HubConnectionBuilder().WithUrl(
                 $"wss://{endpoint}?hub={hubName}&asrs.op=%2F{hubName}"
                 , HttpTransportType.WebSockets,
