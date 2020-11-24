@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.Configuration;
@@ -22,12 +23,15 @@ namespace NegotiationServer.Controllers
         }
 
         [HttpPost("{hub}/negotiate")]
-        public ActionResult Index(string hub, string user)
+        public async Task<ActionResult> Index(string hub, string user)
         {
             if (string.IsNullOrEmpty(user))
             {
                 return BadRequest("User ID is null or empty.");
             }
+
+            var hubContext = await _serviceManager.CreateHubContextAsync(hub);
+            await hubContext.UserGroups.AddToGroupAsync(user, "group1");
 
             return new JsonResult(new Dictionary<string, string>()
             {
